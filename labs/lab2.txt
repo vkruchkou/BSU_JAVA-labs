@@ -1,0 +1,34 @@
+import java.util.Scanner;
+import java.math.*;
+import java.util.Formatter;
+@SuppressWarnings("unused")
+public class Test 
+{
+		@SuppressWarnings("resource")
+		public static void main(String[] args)
+			{
+				Scanner in = new Scanner(System.in);
+				System.out.println("Введите параметр k");
+				int k = in.nextInt();
+				double scale = Math.pow(10, k+1);
+				k = k*(-1);
+				double e = Math.pow(10,k);
+				System.out.println("Введите x");
+				double x = in.nextDouble();
+				double sum = 1;
+				double temp = 1;
+				int factorial = 2;
+				while(Math.abs(temp) > e)
+				{
+					temp = temp*x*x/factorial/(factorial-1)*(-1);
+					factorial += 2;
+					sum += temp;
+				}
+				sum = Math.round(sum*scale)/scale;
+				double mathCos = Math.round(Math.cos(x)*scale)/scale;
+				int randt = -100+(int)(Math.random()*100);
+				Formatter f = new Formatter();
+				f.format("Result |%4$+6.2f|%nMath.cos  |%5$,-6.2f|%nЦелое значение %1$- (6dв восьмеричном и шестнадцатеричном виде  oct: %2x#6o  hex: %3$#6X", randt , randt ,randt,sum, mathCos);
+				System.out.println(f);
+			}
+}

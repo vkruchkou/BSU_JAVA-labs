@@ -1,0 +1,122 @@
+Tag: !DOCTYPE
+Tag: html
+Tag: head
+Tag: meta
+Attributes: http-equiv="Content-Type" content="text/html; charset=utf-8"
+Tag: title
+Tag content: Мой первый сайт на html
+Tag: link
+Attributes: rel="stylesheet" href="/style.css" type="text/css" 
+Tag: body
+Tag: !--
+Tag content:  Основной блок сайта 
+Tag: div
+Tag: !--
+Tag content:  Шапка сайта 
+Tag: div
+Tag: a
+Attributes: href="#"
+Tag: img
+Attributes: src="/images/logo.png" alt="Кофейня" title="Кофейня" 
+Tag: img
+Attributes: src="/images/telefon.png" alt="+7 (3537) 25-60-60" title="+7 (3537) 25-60-60" 
+Tag: !--
+Tag content:  Верхнее меню сайта 
+Tag: div
+Tag: div
+Tag: ul
+Tag: li
+Tag: a
+Attributes: href="#"
+Tag content: О нас
+Tag: li
+Tag: a
+Attributes: href="#"
+Tag content: Ассортимент
+Tag: li
+Tag: a
+Attributes: href="#"
+Tag content: Отзывы
+Tag: li
+Tag: a
+Attributes: href="#"
+Tag content: Забронировать столик
+Tag: li
+Tag: a
+Attributes: href="#"
+Tag content: Наши клиенты
+Tag: li
+Tag: a
+Attributes: href="#"
+Tag content: Контакты
+Tag: div
+Tag: !--
+Tag content:  Левое меню и Контент 
+Tag: div
+Tag: !--
+Tag content:  Контент - правый блок 
+Tag: div
+Tag: h2
+Tag content: Кофе Американо
+Tag: p
+Tag content: Драматизм, в первом приближении, начинает определенный синтез искусств. Целостность, на первый взгляд, изящно иллюстрирует феномер "психической мутации". Герменевтика, как бы это ни казалось парадоксальным, изящно продолжает онтогенез, таким образом, сходные законы контрастирующего развития характерны и для процессов в психике. 
+Tag: p
+Tag content: Согласно теории "вчувствования", разработанной Теодором Липпсом, флегматик дает эйдос. Художественное восприятие образует социально-психологический фактор, таким образом, все перечисленные признаки архетипа и мифа подтверждают, что действие механизмов мифотворчества сродни механизмам художественно-продуктивного мышления. Пародия, согласно традиционным представлениям, изящно имитирует деструктивный горизонт ожидания.
+Tag: img
+Attributes: src="/images/img1.png" alt="" title="" 
+Tag: img
+Attributes: src="/images/img2.png" alt="" title="" 
+Tag: img
+Attributes: src="/images/img3.png" alt="" title="" 
+Tag: p
+Tag content: Художественный ритуал, по определению, иллюстрирует метод кластерного анализа. Сангвиник, так или иначе, изменяем. Весьма существенно следующее: анимус представляет собой маньеризм, именно об этом комплексе движущих сил писал З.Фрейд в теории сублимации.
+Tag: p
+Tag content: Диалогичность готично образует художественный ритуал. Восприятие сотворчества, в том числе, использует неизменный холерик, так Г.Корф формулирует собственную антитезу. Беллетристика иллюстрирует принцип артистизма. 
+Tag: p
+Tag content: Горизонт ожидания аккумулирует фактографический эдипов комплекс, таким образом, сходные законы контрастирующего развития характерны и для процессов в психике. Игровое начало, так или иначе, выстраивает конструктивный этикет, так Г.Корф формулирует собственную антитезу.
+Tag: p
+Tag content: Художественный ритуал, по определению, иллюстрирует метод кластерного анализа. Сангвиник, так или иначе, изменяем. Весьма существенно следующее: анимус представляет собой маньеризм, именно об этом комплексе движущих сил писал З.Фрейд в теории сублимации.
+Tag: !--
+Tag content:  Левое меню - левый блок блок 
+Tag: div
+Tag: div
+Tag: div
+Tag: div
+Tag: ul
+Tag: li
+Tag: a
+Attributes: href="#"
+Tag content: Кофе Айриш
+Tag: li
+Tag: a
+Attributes: href="#"
+Tag content: Кофе Американо
+Tag: li
+Tag: a
+Attributes: href="#"
+Tag content: Кофе Глясе
+Tag: li
+Tag: a
+Attributes: href="#"
+Tag content: Кофе Диппио
+Tag: li
+Tag: a
+Attributes: href="#"
+Tag content: Кофе Капучино
+Tag: li
+Tag: a
+Attributes: href="#"
+Tag content: Кофе Кон Панна
+Tag: li
+Tag: a
+Attributes: href="#"
+Tag content: Кофе Коретто
+Tag: li
+Tag: a
+Attributes: href="#"
+Tag content: Кофе Латте
+Tag: li
+Tag: a
+Attributes: href="#"
+Tag content: Кофе Лунго
+Tag: div

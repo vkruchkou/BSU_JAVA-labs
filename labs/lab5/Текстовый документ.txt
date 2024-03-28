@@ -1,0 +1,65 @@
+import java.io.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class Lab {
+    public static void main(String[] args) {
+        Program pr = new Program();
+        try {
+            pr.base();
+        }catch(FileNotFoundException e)
+        {	System.out.println("file not found");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+class Program {
+    public void base() throws IOException {
+        mainTask();
+    }
+    private void mainTask() throws IOException {
+        FileReader fr;
+        FileWriter fw;
+        fr = new FileReader("D:\\Учеба\\прога\\2 курс\\лабы\\lab5\\input.txt");
+        fw = new FileWriter("D:\\Учеба\\прога\\2 курс\\лабы\\lab5\\output.txt");
+        BufferedReader reader = new BufferedReader(fr);
+        BufferedWriter writer = new BufferedWriter(fw);
+        System.out.println("correct");
+        String line;
+        while ((line = reader.readLine()) != null) {
+            writer.write(line);
+            if(checkCorrect(line))
+                writer.write(" correct\n");
+            else
+                writer.write(" incorrect\n");
+        }
+        reader.close();
+        writer.close();
+    }
+    private boolean checkCorrect(String line){
+        Pattern pattern = Pattern.compile("^г\\.\\s[А-Я][а-я]+,\\s(ул|пер|пр)\\.\\s[А-Я][а-я]+,\\sд\\.\\d+(,\\sкв\\.\\d+$|$)");
+        Matcher matcher = pattern.matcher(line);
+        if(matcher.find()) {
+            System.out.println(line.substring(matcher.start(), matcher.end()));
+            return true;
+        }
+        return false;
+    }
+    private void othTask1() throws IOException {
+        FileReader fr;
+        FileWriter fw;
+        fr = new FileReader("D:\\Учеба\\прога\\2 курс\\лабы\\lab5\\input1.txt");
+        fw = new FileWriter("D:\\Учеба\\прога\\2 курс\\лабы\\lab5\\output1.txt");
+        BufferedReader reader = new BufferedReader(fr);
+        BufferedWriter writer = new BufferedWriter(fw);
+        String line;
+        while ((line = reader.readLine()) != null) {
+            line = checkHtml(line);
+            if(!(line.equals("")))
+                writer.write(line);
+        }
+        reader.close();
+        writer.close();
+    }

@@ -1,0 +1,90 @@
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+public class Lab {
+    public static void main(String[] args){
+        Program pr = new Program();
+        pr.base();
+    }
+}
+class Program {
+    void base(){
+        System.out.println("Общее задание");
+        generalTask();
+        System.out.println("\n\nДля Calendar вывести и изменять секунды ,миллисекунды, день в год");
+        calenderTask();
+        System.out.println("""
+
+
+                Для SimpleDateFormat вывести:
+                четырех буквенное сокращение месяца в русской локализации или трех буквенное - в английской(Feb);
+                неделя в году без лидирующих нулей;
+                день недели (сокращение);
+                время в 12-часовом формате с лидирующим нулем;
+                секунды с лидирующим нулем""");
+        dateFormatter();
+        System.out.println("""
+                
+                
+                Для Formatter вывести:
+                Стандартное представление в виде: день, месяц чч:мм:сс часовой пояс, год;
+                День месяца как десятичное целое (от 01 до 31);
+                Номер дня в году как десятичное целое (от 001 до 366);
+                Минуты как десятичное целое (от 00 до 59)""");
+        formatterTask();
+    }
+    public boolean tryDateParse(String dateString, String dateFormat) {
+        if (dateString.equals("")) {
+            return false;
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+        sdf.setLenient(false);
+        try {
+            sdf.parse(dateString);
+        } catch (ParseException e) {return false;}
+        return true;
+    }
+    void generalTask(){
+        Calendar cl = GregorianCalendar.getInstance();
+        System.out.println("Введите дату в формате yyyy-mm-dd");
+        Scanner sc = new Scanner((System.in));
+        String strDate = sc.nextLine();//2000-10-13
+        String dateFormat = "yyyy-MM-dd";
+        DateFormat df = new SimpleDateFormat(dateFormat);
+        df.setLenient(false);
+        System.out.println(tryDateParse(strDate,dateFormat));
+        try{
+            Date date = df.parse(strDate);
+            cl.setTime(date);
+            System.out.println(date);
+            System.out.println(cl.getTime());
+            System.out.println(cl);
+        }catch(ParseException exception){
+            System.out.println(exception.getMessage());
+        }
+    }
+    void calenderTask() {
+        Calendar cl = GregorianCalendar.getInstance();
+        System.out.printf("Second: %s, Millisecond %s, Day of year %s%n",cl.get(Calendar.SECOND),cl.get(Calendar.MILLISECOND),cl.get(Calendar.DAY_OF_YEAR));
+        cl.add(Calendar.SECOND,(int)(Math.random()*60));
+        cl.add(Calendar.MILLISECOND,(int)(Math.random()*1000));
+        cl.roll(Calendar.DAY_OF_YEAR,true);
+        System.out.println("Изменненые поля");
+        System.out.printf("Second: %s, Millisecond %s, Day of year %s%n",cl.get(Calendar.SECOND),cl.get(Calendar.MILLISECOND),cl.get(Calendar.DAY_OF_YEAR));
+        cl.setTime(new Date(2121212L));
+        System.out.println("Изменненые поля");
+        System.out.printf("Second: %s, Millisecond %s, Day of year %s%n",cl.get(Calendar.SECOND),cl.get(Calendar.MILLISECOND),cl.get(Calendar.DAY_OF_YEAR));
+    }
+    void dateFormatter() {
+        DateFormat df = new SimpleDateFormat("MMM w E hh ss");
+        System.out.println(df.format(new Date()));
+    }
+    void formatterTask() {
+        Calendar cl = GregorianCalendar.getInstance();
+        Date date = new Date();
+        Formatter fr = new Formatter();
+        System.out.println(fr.format("%tc\n%td\n%tj\n%tM",cl,date,date,date));
+    }
+}

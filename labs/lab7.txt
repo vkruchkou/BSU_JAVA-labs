@@ -1,0 +1,170 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.*;
+
+
+public class Lab {
+    public static void main(String[] args) {
+        Program pr = new Program();
+        try {
+            pr.base();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+}
+class SentenceNumber implements Comparable<SentenceNumber>{
+    private final int sentenceNumber;
+    private int id = 0;
+    private static final ArrayList<Integer> created = new ArrayList<>();
+
+    public SentenceNumber(int sentenceNumber) {
+        this.sentenceNumber = sentenceNumber;
+        created.add(this.sentenceNumber);
+        for (Integer integer : created)
+            if (integer.equals(this.sentenceNumber))
+                id++;
+    }
+
+    @Override
+    public String toString() {
+        return "SentenceNumber{"+"SentenceNumber=" + this.sentenceNumber + " hashCode(): " + hashCode() + "}";
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.toString(sentenceNumber*(100+id)).hashCode()%(WordInText.getWordsNumber()-id);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return (o instanceof SentenceNumber)
+                && this.sentenceNumber==((SentenceNumber)o).sentenceNumber
+                && id == ((SentenceNumber)o).id;
+    }
+
+    @Override
+    public int compareTo(SentenceNumber o) {
+        return Integer.compare(this.sentenceNumber,o.sentenceNumber);
+    }
+
+}
+class WordInText {
+    private static int wordsNumber;
+
+    static void setWordsNumber(int wordsNumber1){
+        wordsNumber=wordsNumber1;
+    }
+
+    static int getWordsNumber(){
+        return wordsNumber;
+    }
+
+    private final String word;
+    private final int lineNumber;
+    private final int columnNumber;
+
+    public WordInText(String word, int lineNumber, int columnNumber) {
+        this.word = word;
+        this.lineNumber = lineNumber;
+        this.columnNumber = columnNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "WordInText{" +
+                "word='" + word + '\'' +
+                ", lineNumber=" + lineNumber +
+                ", columnNumber=" + columnNumber +
+                "} ";
+    }
+
+}
+
+class PairForWordInText{
+    private final WordInText wordInText;
+    private final SentenceNumber sentenceNumber;
+    PairForWordInText(WordInText wordInText,SentenceNumber sentenceNumber) {
+        this.wordInText=wordInText;
+        this.sentenceNumber=sentenceNumber;
+    }
+
+    @Override
+    public String toString() {
+        return wordInText +""+ sentenceNumber;
+    }
+}
+
+class Program {
+
+    void base() throws IOException {
+        HashMap<SentenceNumber, WordInText> m;
+        System.out.println("\n\nHashmap:\n\n");
+        printMap(m = readFileInMap());
+        System.out.println("\n\nsorted map:\n\n");
+        printListPair(sortHashMap(m));
+    }
+
+    HashMap<SentenceNumber, WordInText> readFileInMap() throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader("input.txt"));
+        String s;
+        int words = 0;
+        while((s = br.readLine()) != null){
+            Scanner scp = new Scanner(s);
+            scp.useDelimiter("[.!?\\s()\";:]+");
+            while (scp.hasNext()) {
+                scp.next();
+                words++;
+            }
+        }
+        br.close();
+        WordInText.setWordsNumber(words);
+        FileReader fr = new FileReader("input.txt");
+        br = new BufferedReader(fr);
+        int lineNumber = 1;
+        int columnNumber;
+        int sentenceNumber = 1;
+        String temp;
+        HashMap<SentenceNumber, WordInText> wordsInText = new HashMap<>();
+        while ((s = br.readLine()) != null) {
+            columnNumber = 1;
+            Scanner sc = new Scanner(s);
+            sc.useDelimiter("[.!?]+");
+            while (sc.hasNext()) {
+                Scanner scp = new Scanner(sc.next());
+                scp.useDelimiter("[\\s()\";:]+");
+                while (scp.hasNext()) {
+                    temp = scp.next();
+                    wordsInText.put(new SentenceNumber(sentenceNumber), new WordInText(temp, lineNumber, columnNumber));
+                    columnNumber++;
+                }
+                sentenceNumber++;
+            }
+            lineNumber++;
+        }
+        br.close();
+        return wordsInText;
+    }
+
+    void printMap(HashMap<SentenceNumber, WordInText> m) {
+        m.forEach((u, v) -> System.out.println("<"+v+","+u+">"));
+    }
+
+    List<PairForWordInText> sortHashMap(HashMap<SentenceNumber, WordInText> m) {
+        List<SentenceNumber> sortedKeys=new ArrayList<>(m.keySet());
+        Collections.sort(sortedKeys);
+        List<PairForWordInText> listOfSortedMap = new ArrayList<>();
+        for (SentenceNumber key : sortedKeys) {
+            listOfSortedMap.add(new PairForWordInText(m.get(key),key));
+        }
+        return listOfSortedMap;
+    }
+
+    void printListPair( List<PairForWordInText> listOfSortedMap) {
+        Iterator it = listOfSortedMap.iterator();
+        while(it.hasNext()) {
+            System.out.println(it.next());
+        }
+    }
+}

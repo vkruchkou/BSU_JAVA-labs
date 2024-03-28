@@ -1,0 +1,34 @@
+import java.util.Scanner;
+import java.math.*;
+public class Test 
+{
+		public static void main(String[] args)
+			{
+				@SuppressWarnings("resource")
+				Scanner in = new Scanner(System.in);
+				System.out.print("Введите параметр k\n");
+				int k = in.nextInt();
+				double scale = Math.pow(10, k+1);
+				k = k*(-1);
+				double e = Math.pow(10,k);
+				System.out.print("Введите x\n");
+				double x = in.nextDouble();
+				double sum = 1;
+				double temp = 1;
+				int factorial = 2;
+				while(Math.abs(temp) > e)
+				{
+					temp = temp*x*x/factorial/(factorial-1)*(-1);
+					factorial += 2;
+					sum += temp;
+				}
+				sum = Math.round(sum*scale)/scale;
+				System.out.print("Result " + sum);
+				double mathCos = Math.round(Math.cos(x)*scale)/scale;
+				System.out.print("\nMath.cos " + mathCos);
+				if(sum == mathCos)
+					System.out.print("\nРезультаты равны\n");
+				else
+					System.out.print("Результаты неравны\n");
+			}
+}

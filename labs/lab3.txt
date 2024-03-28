@@ -1,0 +1,135 @@
+import java.util.*;
+import java.text.NumberFormat;
+import java.math.*;
+@SuppressWarnings("unused")
+public class Lab
+{
+
+
+    public static void random(Number  [][] matrix, Integer m, Integer n) {
+        for (Integer i=0; i<m; i++)
+            for (Integer j=0; j<n; j++)
+                matrix[i][j] = (int)(100-(Math.random()*200));
+    }
+
+    public static void mPrint(Number [][] matrix,Integer m,Integer n) {
+        Formatter f;
+        NumberFormat format = NumberFormat.getInstance();
+        for (Integer i=0; i<m; i++) {
+            f = new Formatter();
+            for (Integer j=0; j<n; j++)
+                f.format("%10s", format.format(matrix[i][j]));
+            System.out.println(f);
+        }
+    }
+
+    public static Integer character(Number [][] matrix,Integer indexColumn,Integer n) {
+        Integer ch = 0;
+        for (Integer i=0; i<n; i++)
+            if(i % 2 == 1)
+                if(matrix[i][indexColumn].intValue()<0)
+                    ch = ch+Math.abs(matrix[i][indexColumn].intValue());
+        return ch;
+    }
+
+    public static void replaceColumn (Number [][] matrix, int k,int m){
+
+        for (Integer i = 0; i < matrix.length; i++) {
+            Number tmp = matrix[i][k];
+            matrix[i][k] = matrix[i][m];
+            matrix[i][m] = tmp;
+        }
+    }
+
+
+    public static boolean compareTo(Number n1, Number n2) {
+        // ignoring null handling
+        BigDecimal b1 = BigDecimal.valueOf(n1.doubleValue());
+        BigDecimal b2 = BigDecimal.valueOf(n2.doubleValue());
+        return b1.compareTo(b2) > 0;
+    }
+
+    public static void sortOfCharacter(Number [][] matrix,Number [] arrayOfCharacter) {
+        for (Integer i = 0; i <arrayOfCharacter.length; i++) {
+            Number min = arrayOfCharacter[i];
+            Integer minId = i;
+            for (Integer j = i+1; j < arrayOfCharacter.length; j++) {
+                if (compareTo(min , arrayOfCharacter[j])) {
+                    min = arrayOfCharacter[j];
+                    minId = j;
+                }
+            }
+            Number temp = arrayOfCharacter[i];
+            arrayOfCharacter[i] = min;
+            arrayOfCharacter[minId] = temp;
+            replaceColumn(matrix,i,minId);
+        }
+    }
+
+
+
+
+    public static void main(String[] args)
+    {
+        Scanner in = new Scanner(System.in);
+        System.out.print("Введите размеры матрицы\n");
+        Integer m = in.nextInt();
+        Integer n = in.nextInt();
+        in.close();
+        Integer[][] matrix = new Integer[m][n];
+        random(matrix,m,n);
+        System.out.print("Начальная матрица\n");
+        mPrint(matrix,m,n);
+        Integer[] arrayOfCharacter = new Integer[n];
+        for (Integer i=0; i<n; i++)
+            arrayOfCharacter[i]=character(matrix,i,m);
+        Formatter f = new Formatter();
+        for (Integer i=0; i<n; i++)
+            f.format("%10s","-");
+        System.out.println(f);
+        f= new Formatter();
+        NumberFormat format =NumberFormat.getCurrencyInstance(Locale.US);
+        for (Integer i=0; i<n; i++)
+            f.format("%10s",format.format(arrayOfCharacter[i]));
+        System.out.println(f);
+        System.out.print("Отсортированная матрица по характеристике\n");
+        sortOfCharacter(matrix,arrayOfCharacter);
+        mPrint(matrix,m,n);
+        f = new Formatter();
+        for (Integer i=0; i<n; i++)
+            f.format("%10s","-");
+        System.out.println(f);
+        f = new Formatter();
+        format =NumberFormat.getCurrencyInstance(Locale.ENGLISH);
+        for (Integer i=0; i<n; i++)
+            f.format("%10s",format.format(arrayOfCharacter[i]));
+        System.out.println(f);
+        System.out.print("Отсортированная в обратном порядке посденяя строка матрицы \n");
+        Comparator com = new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o1.compareTo(o2)*(-1);
+            }
+        };
+        Arrays.sort(matrix[m-1], com);
+        f = new Formatter();
+        format =NumberFormat.getInstance();
+        for (Integer i=0; i<n; i++)
+            f.format("%10s",format.format(matrix[m-1][i]));
+        System.out.println(f);
+        System.out.print("Другой массив\n");
+        Integer [] sourceArr = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+        f = new Formatter();
+        format =NumberFormat.getPercentInstance();
+        for (Integer i=0; i<sourceArr.length; i++)
+            f.format("%6s",format.format(sourceArr[i]));
+        System.out.println(f);
+        System.out.print("Частичное копирование первой строки матрицы в другой массив\n");
+        System.arraycopy (matrix[0], 0, sourceArr, 0, n/2);
+        f = new Formatter();
+        format =NumberFormat.getInstance();
+        for (Integer i=0; i<sourceArr.length; i++)
+            f.format("%6s",format.format(sourceArr[i]));
+        System.out.println(f);
+    }
+}

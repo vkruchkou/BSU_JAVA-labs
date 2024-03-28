@@ -1,0 +1,115 @@
+import java.util.*;
+public class Lab {
+    //  4 iy"qw 777"e213w777pr"k 777 23u3 oe::":123 as777a  :7: 777:444 qwe777rrewq kgj777f 293 777 7772X"X11 07
+    // : "X
+    public static void main(String[] args) {
+        Program pr = new Program();
+        pr.base();
+    }
+}
+class Program {
+
+    static boolean found = false;
+    static int indexOfP1 = 0;
+    static int indexOfLast = 0;
+    public void base() {
+        Scanner in = new Scanner(System.in);
+        System.out.print("Введите две строки и число\n");
+        String str1 = in.nextLine();
+        String str2 = in.nextLine();
+        int p = in.nextInt();
+        in.close();
+        Main(str1,str2, p);
+    }
+     private boolean tryParse(String s) {
+        try {
+            Long.parseLong(s);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+    private void MakeArray(int k, String str1, String str2, StringBuffer strOutput ) {
+
+        int[] array1 = new int[k];
+        StringTokenizer st = new StringTokenizer(str1, str2);
+        k = 0;
+        String strTemp;
+        while (st.hasMoreElements()) {
+            strTemp = st.nextToken();
+            if (!tryParse(strTemp))
+                continue;
+            array1[k] = Integer.parseInt(strTemp, 10);
+            k++;
+        }
+        strOutput.append(String.format("Найденные числа %s\n", Arrays.toString(array1)));
+    }
+    private void DeleteP(String str1, int indexOfLast, int p,StringBuffer strOutput)
+    {
+        StringBuffer buffer = new StringBuffer().append(str1.substring(0,indexOfLast-1));
+        buffer.append(str1.substring(indexOfLast-1).replaceFirst(Integer.toString(p),""));
+        str1 = buffer.toString();
+        strOutput.append(String.format("Удаление последнего вхождения P в строку\n%s\n",str1));
+    }
+    private int Split(StringTokenizer st,StringBuffer buffer1, StringBuffer buffer2, String str1,int p){
+        boolean key = true;
+        String strTemp;
+        int len = 0;
+        int k = 0;
+        while (st.hasMoreElements()) {
+            strTemp = st.nextToken();
+            buffer1.append(strTemp).append("\n");
+            len = str1.indexOf(strTemp,len) + strTemp.length() -1;
+            if (tryParse(strTemp)) {
+                k++;
+                if (Integer.parseInt(strTemp)==p) {
+                    found = true;
+                    indexOfLast = len - strTemp.length() + 1;
+                    if (key) {
+                        key = false;
+                        indexOfP1 = len - strTemp.length() + 1;
+                    }
+                }
+            }
+            else {
+                if (strTemp.equals(new StringBuffer(strTemp).reverse().toString()))
+                    buffer2.append(strTemp).append("\n");
+            }
+        }
+        return  k;
+    }
+    private void Main (String str1, String str2,int p){
+        StringTokenizer st = new StringTokenizer(str1, str2);
+        int k = 0;
+        StringBuffer buffer1 = new StringBuffer();
+        StringBuffer buffer2 = new StringBuffer();
+        k = Split(st,buffer1,buffer2,str1,p);
+        String strOfTokens = buffer1.toString();
+        String strOfPalindromes = buffer2.toString();
+        StringBuffer strOutput = new StringBuffer();
+        if (strOfTokens.length() == 0)
+            System.out.println("Лексем нет");
+        else {
+            strOutput.append(String.format("Лексемы:\n%s", strOfTokens));
+            if (strOfPalindromes.length() == 0)
+                strOutput.append("Лексем являющиеся палиндромами нет");
+            else
+                strOutput.append(String.format("Лексемы являющиеся палиндромами:\n%s", strOfPalindromes));
+            if (k == 0) {
+                strOutput.append("Числа отсуствуют\n");
+            }
+            else
+                MakeArray(k,str1,str2,strOutput);
+            if (!found)
+                strOutput.append("Введенное число P ненайдено\n");
+            else
+                strOutput.append(String.format("Индекс введнного числа P в строке %d\n",indexOfP1));
+        }
+        str1 = new StringBuffer().append(-p).append(str1).toString();
+        indexOfLast += Integer.toString(-p).length();
+        strOutput.append(String.format("Добавление в строку -P в начало\n%s\n",str1));
+        if (found)
+            DeleteP(str1,indexOfLast,p,strOutput);
+        System.out.println(strOutput);
+    }
+}

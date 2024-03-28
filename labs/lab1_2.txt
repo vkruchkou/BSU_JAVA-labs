@@ -1,0 +1,38 @@
+import java.util.Scanner;
+import java.math.*;
+public class Test 
+{
+		@SuppressWarnings("unused")
+		public static void main(String[] args)
+			{
+				@SuppressWarnings("resource")
+				Scanner in = new Scanner(System.in);
+				System.out.println("Введите параметр k");
+				BigInteger bk = new BigInteger(Integer.toString(in.nextInt()));
+				double scale = Math.pow(10, bk.intValue()+1);
+				BigInteger bscale = bk;
+				System.out.println("Введите x");
+				BigDecimal bx = new BigDecimal(in.nextDouble());
+				BigDecimal bsum = new BigDecimal("1");
+				BigDecimal btemp = new BigDecimal("1");
+				BigDecimal bfactorial = new BigDecimal("2");
+				BigDecimal e = new BigDecimal("0.1");
+				e = e.pow(bk.intValue());
+				while(btemp.abs().compareTo(e)==1)
+					{
+						btemp = btemp.multiply(bx).multiply(bx).multiply(BigDecimal.valueOf(-1)).divide(bfactorial,20, RoundingMode.HALF_UP).divide(bfactorial.add(BigDecimal.valueOf(-1)),20, RoundingMode.HALF_UP);
+						bfactorial = bfactorial.add(BigDecimal.valueOf(2));
+						bsum = bsum.add(btemp);
+					}
+				bsum = bsum.setScale(bk.intValue()+1, RoundingMode.FLOOR);
+				System.out.println("Result " + bsum);
+				BigDecimal mathCos = new BigDecimal(Math.cos(bx.doubleValue()));
+				mathCos = mathCos.setScale(bk.intValue()+1, RoundingMode.FLOOR);
+				System.out.println("Math.cos " + mathCos);
+				
+				if(bsum.compareTo(mathCos) == 0)
+					System.out.println("Результаты равны");
+				else
+					System.out.println("Результаты неравны");
+			}
+}

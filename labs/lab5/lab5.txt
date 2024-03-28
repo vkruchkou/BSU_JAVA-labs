@@ -1,0 +1,118 @@
+import java.io.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class Lab {
+    public static void main(String[] args) {
+        Program pr = new Program();
+        try {
+            pr.base();
+        }catch(FileNotFoundException e)
+        {	System.out.println("file not found");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+class Program {
+    public void base() throws IOException {
+        mainTask();
+        System.out.println("\n\n");
+        othTask1();
+        System.out.println("\n\n");
+        othTask2();
+    }
+    private void mainTask() throws IOException {
+        FileReader fr;
+        FileWriter fw;
+        fr = new FileReader("D:\\Учеба\\прога\\2 курс\\лабы\\lab5\\input.txt");
+        fw = new FileWriter("D:\\Учеба\\прога\\2 курс\\лабы\\lab5\\output.txt");
+        BufferedReader reader = new BufferedReader(fr);
+        BufferedWriter writer = new BufferedWriter(fw);
+        System.out.println("correct");
+        String line;
+        while ((line = reader.readLine()) != null) {
+            writer.write(line);
+            if(checkCorrect(line))
+                writer.write(" correct\n");
+            else
+                writer.write(" incorrect\n");
+        }
+        reader.close();
+        writer.close();
+    }
+    private boolean checkCorrect(String line){
+        Pattern pattern = Pattern.compile("^г\\.\\s[А-Я][а-я]+,\\s(ул|пер|пр)\\.\\s[А-Я][а-я]+,\\sд\\.\\d+(,\\sкв\\.\\d+$|$)");
+        Matcher matcher = pattern.matcher(line);
+        if(matcher.find()) {
+            System.out.println(line.substring(matcher.start(), matcher.end()));
+            return true;
+        }
+        return false;
+    }
+    private void othTask1() throws IOException {
+        FileReader fr;
+        FileWriter fw;
+        fr = new FileReader("D:\\Учеба\\прога\\2 курс\\лабы\\lab5\\input1.txt");
+        fw = new FileWriter("D:\\Учеба\\прога\\2 курс\\лабы\\lab5\\output1.txt");
+        BufferedReader reader = new BufferedReader(fr);
+        BufferedWriter writer = new BufferedWriter(fw);
+        String line;
+        while ((line = reader.readLine()) != null) {
+            line = checkHtml(line);
+            if(!(line.equals("")))
+                writer.write(line);
+        }
+        reader.close();
+        writer.close();
+    }
+    private String checkHtml(String line){
+        Pattern pattern = Pattern.compile("(?<=<)[^/]+?(?=([ >]))");
+        Matcher matcher = pattern.matcher(line);
+        Pattern pattern1 = Pattern.compile("(?<=\\s).+?=\".+?\"((?=>)|.+?(?=/>))");
+        Pattern pattern2 = Pattern.compile("(?<=<.{1,}>)[^<].+?(?=</.{1,}>)|(?<=<!--).+?(?=-->)");
+        Matcher matcher1;
+        Matcher matcher2 = pattern2.matcher(line);
+        StringBuffer buf = new StringBuffer();
+        String temp;
+        String temp2;
+        while (matcher.find()) {
+            buf.append("Tag: ");
+            temp = line.substring(matcher.start(), matcher.end());
+            buf.append(temp).append("\n");
+            temp2 = line.substring(matcher.end());
+            matcher1 = pattern1.matcher( temp2);
+            if(matcher1.find()&& temp2.charAt(0)==' '){
+                temp = temp2.substring(matcher1.start(), matcher1.end());
+               buf.append("Attributes: ").append(temp).append("\n");
+           }
+            if(!(matcher.end()+1==line.length()))
+                if(!(line.charAt(matcher.end()+1)=='<')){
+                    if(matcher2.find()) {
+                        temp = line.substring(matcher2.start(), matcher2.end());
+                        buf.append("Tag content: ").append(temp).append("\n");
+                    }
+                }
+        }
+        System.out.print(buf);
+        return buf.toString();
+    }
+    private void othTask2() throws IOException {
+        FileReader fr;
+        FileWriter fw;
+        fr = new FileReader("D:\\Учеба\\прога\\2 курс\\лабы\\lab5\\input2.txt");
+        fw = new FileWriter("D:\\Учеба\\прога\\2 курс\\лабы\\lab5\\output2.txt");
+        BufferedReader reader = new BufferedReader(fr);
+        BufferedWriter writer = new BufferedWriter(fw);
+        String line;
+        if ((line = reader.readLine()) != null) {
+            System.out.println("Исходная строка\n"+line);
+            line = line.replaceAll("[А-Я][а-я]+(?=(.|,|\\s))","Олег");
+            System.out.println("Полученная строка\n"+line);
+            writer.write(line);
+        }
+        reader.close();
+        writer.close();
+    }
+}
